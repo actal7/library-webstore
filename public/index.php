@@ -5,6 +5,8 @@ require_once '../vendor/autoload.php';
 
 $request = $_SERVER['REQUEST_URI'];
 
+echo "TEST";
+
 switch ($request) {
     case '/' :
         require __DIR__ . '/../src/controllers/BookController.php';
