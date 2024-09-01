@@ -7,6 +7,10 @@ $request = $_SERVER['REQUEST_URI'];
 
 echo "TEST DEPLOY";
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 switch ($request) {
     case '/' :
         require __DIR__ . '/../src/controllers/BookController.php';
