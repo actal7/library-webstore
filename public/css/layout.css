@@ -18,19 +18,48 @@ body {
   display: block;
 }
 
-/* Home Page Content */
+.banner h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 5px;
+  color: var(--primary-color);
+}
+
+/* Home Content */
 .home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 40px 0;
 }
 
+.home-content section {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .home-content h2 {
+  font-size: 1.2rem;
   margin-bottom: 10px;
-  font-size: 2em;
+  color: var(--secondary-color);
+  text-align: center;
 }
 
 .home-content p {
-  margin-bottom: 20px;
+  font-size: 1rem;
   line-height: 1.6;
+  text-align: justify;
 }
 
 .about-us,
