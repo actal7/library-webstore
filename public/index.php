@@ -10,8 +10,13 @@ $request = $_SERVER['REQUEST_URI'];
 switch ($request) {
     case '/' :
         require __DIR__ . '/../src/controllers/BookController.php';
-        $controller = new BookController($pdo); 
+        $controller = new BookController($pdo);
         $controller->home();
+        break;
+    case '/register' :
+        require __DIR__ . '/../src/controllers/AuthController.php';
+        $controller = new AuthController($pdo);
+        $controller->register();
         break;
     case '/book' :
         require __DIR__ . '/../src/controllers/BookController.php';
