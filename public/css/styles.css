@@ -2,3 +2,11 @@
 @import url("layout.css");
 @import url("components.css");
 @import url("utilities.css");
+
+:root {
+  --primary-color: #c9ada7;
+  --secondary-color: #9a8c98;
+  --bg-color: #22223b;
+  --text-color: #f2e9e4;
+  --trim-color: #4a4e69;
+}
