@@ -1,5 +1,5 @@
 <?php
-// src/views/header.php
+
 ?>
 
 <!DOCTYPE html>

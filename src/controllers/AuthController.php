@@ -35,13 +35,11 @@ class AuthController extends BaseController
             ]);
 
             if ($result) {
-                // Optionally start a session and log the user in
                 session_start();
                 $_SESSION['user_id'] = $this->pdo->lastInsertId();
                 $_SESSION['username'] = $username;
                 $_SESSION['role'] = 'member';
 
-                // Redirect to home page or dashboard
                 header("Location: /");
                 exit();
             } else {
@@ -51,5 +49,48 @@ class AuthController extends BaseController
         } else {
             $this->loadView('register');
         }
+    }
+
+    public function login()
+    { 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = htmlspecialchars(trim($_POST['username']));
+            $password = trim($_POST['password']);
+
+            if (empty($username) || empty($password)) {
+                $error = "Username and password are required.";
+                $this->loadView('login', ['error' => $error]);
+                return;
+            }
+
+            // Check if the user exists
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
+            $stmt->execute(['username' => $username]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['password'])) {
+                // Start a session and log the user in
+                session_start();
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role'];
+
+                header("Location: /");
+                exit();
+            } else {
+                $error = "Invalid username or password.";
+                $this->loadView('login', ['error' => $error]);
+            }
+        } else {
+            $this->loadView('login');
+        }
+    }
+
+    public function logout()
+    {
+        session_start();
+        session_destroy();
+        header("Location: /");
+        exit();
     }
 }
