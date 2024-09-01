@@ -1,0 +1,18 @@
+/* Container */
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Utility classes for margins, paddings, etc. */
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.text-center {
+  text-align: center;
+}

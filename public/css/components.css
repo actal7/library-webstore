@@ -1,0 +1,63 @@
+/* Buttons */
+button,
+.btn {
+  display: inline-block;
+  background-color: #444;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover,
+.btn:hover {
+  background-color: #666;
+}
+
+/* Links */
+a {
+  color: #444;
+}
+
+a:hover {
+  color: #666;
+  text-decoration: underline;
+}
+
+/* Forms */
+form {
+  margin: 20px 0;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="password"],
+form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+form input[type="submit"],
+form button {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+form input[type="submit"]:hover,
+form button:hover {
+  background-color: #666;
+}
