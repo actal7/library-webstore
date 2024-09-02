@@ -54,8 +54,8 @@
 }
 
 .book-card img {
-  max-width: 100%;
-  height: auto;
+  width: 12rem;
+  height: 18rem;
   border-radius: 5px;
   margin-bottom: 10px;
 }
