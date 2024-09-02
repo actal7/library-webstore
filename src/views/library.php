@@ -2,7 +2,7 @@
     <h1>Library</h1>
     
     <form method="GET" action="/library" class="search-form">
-        <input type="text" name="search" placeholder="Search by title or author..." value="<?= htmlspecialchars($search) ?>">
+        <input class="search-bar" type="text" name="search" placeholder="Search by title or author..." value="<?= htmlspecialchars($search) ?>">
         <button type="submit">Search</button>
     </form>
 

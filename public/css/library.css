@@ -24,6 +24,10 @@
   border-radius: 5px 0 0 5px;
 }
 
+.search-form input.search-bar {
+  margin: 0;
+}
+
 .search-form button {
   padding: 10px 20px;
   background-color: var(--secondary-color);
