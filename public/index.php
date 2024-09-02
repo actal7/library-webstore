@@ -31,20 +31,20 @@ switch ($request) {
         $controller = new BookController($pdo);
         $controller->library();
         break;
-    case '/book' :
+    case '/book':
         require __DIR__ . '/../src/controllers/BookController.php';
         $controller = new BookController($pdo);
         $controller->viewBook();
+        break;
+    case '/profile':
+        require __DIR__ . '/../src/controllers/ProfileController.php';
+        $controller = new ProfileController($pdo);
+        $controller->index();
         break;
     case '/dashboard' :
         require __DIR__ . '/../src/controllers/DashboardController.php';
         $controller = new DashboardController($pdo);
         $controller->index();
-        break;
-    case '/dashboard/manage-books' :
-        require __DIR__ . '/../src/controllers/DashboardController.php';
-        $controller = new DashboardController($pdo);
-        $controller->manageBooks();
         break;
     case '/dashboard/manage-users' :
         require __DIR__ . '/../src/controllers/DashboardController.php';

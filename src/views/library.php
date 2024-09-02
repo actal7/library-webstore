@@ -10,15 +10,16 @@
         <p class="no-results">Sorry, we couldn't find a book that matches your search.</p>
     <?php else: ?>
         <div class="books-grid">
-            <?php foreach ($books as $book): ?>
-                <div class="book-card">
-                    <img src="<?= htmlspecialchars($book['image_url']) ?>" alt="<?= htmlspecialchars($book['title']) ?>">
-                    <h3><?= htmlspecialchars($book['title']) ?></h3>
-                    <p><?= htmlspecialchars($book['author']) ?></p>
-                    <p><?= htmlspecialchars($book['description']) ?></p>
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <?php foreach ($books as $book): ?>
+            <a href="/book?id=<?= htmlspecialchars($book['id']) ?>" class="book-card">
+                <img src="<?= htmlspecialchars($book['image_url']) ?>" alt="<?= htmlspecialchars($book['title']) ?>">
+                <h3><?= htmlspecialchars($book['title']) ?></h3>
+                <p><?= htmlspecialchars($book['author']) ?></p>
+                <p><?= htmlspecialchars($book['description']) ?></p>
+            </a>
+        <?php endforeach; ?>
+</div>
+
     <?php endif; ?>
 
     <div class="pagination">

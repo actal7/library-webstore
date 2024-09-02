@@ -3,6 +3,8 @@
 @import url("components.css");
 @import url("utilities.css");
 @import url("library.css");
+@import url("book.css");
+@import url("profile.css");
 
 :root {
   --primary-color: #c9ada7;
