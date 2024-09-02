@@ -15,6 +15,7 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
+            <li><a href="/library">Library</a></li>
             <?php if (isset($_SESSION['username'])): ?>
                 <li><a href="/profile">Profile</a></li>
                 <?php if ($_SESSION['role'] === 'clerk' || $_SESSION['role'] === 'admin'): ?>

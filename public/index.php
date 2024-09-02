@@ -3,11 +3,7 @@
 require_once '../config/config.php';
 require_once '../vendor/autoload.php';
 
-$request = $_SERVER['REQUEST_URI'];
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+$request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 switch ($request) {
     case '/' :
@@ -29,6 +25,11 @@ switch ($request) {
         require __DIR__ . '/../src/controllers/AuthController.php';
         $controller = new AuthController($pdo);
         $controller->logout();
+        break;
+    case '/library':
+        require __DIR__ . '/../src/controllers/BookController.php';
+        $controller = new BookController($pdo);
+        $controller->library();
         break;
     case '/book' :
         require __DIR__ . '/../src/controllers/BookController.php';
