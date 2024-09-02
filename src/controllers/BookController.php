@@ -40,11 +40,14 @@ class BookController extends BaseController
             $stmt = $this->pdo->prepare("INSERT INTO reservations (user_id, book_id) VALUES (:user_id, :book_id)");
             $stmt->execute(['user_id' => $_SESSION['user_id'], 'book_id' => $bookId]);
 
-            echo "Book reserved successfully!";
+            header("Location: /book?id=$bookId&reserved=success");
+            exit();
         } else {
-            echo "Failed to reserve the book.";
+            header("Location: /book?id=$bookId&reserved=error");
+            exit();
         }
     }
+
 
     public function library()
     {

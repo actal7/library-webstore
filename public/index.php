@@ -46,6 +46,11 @@ switch ($request) {
         $controller = new DashboardController($pdo);
         $controller->index();
         break;
+    case '/reserve':
+        require __DIR__ . '/../src/controllers/BookController.php';
+        $controller = new BookController($pdo);
+        $controller->reserveBook();
+        break;
     case '/dashboard/manage-users' :
         require __DIR__ . '/../src/controllers/DashboardController.php';
         $controller = new DashboardController($pdo);

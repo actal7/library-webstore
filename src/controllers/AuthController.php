@@ -4,52 +4,52 @@ require_once 'BaseController.php';
 
 class AuthController extends BaseController
 {
-    public function register()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Sanitize user inputs
-            $username = htmlspecialchars(trim($_POST['username']));
-            $password = trim($_POST['password']);
+  public function register()
+  {
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          $username = htmlspecialchars(trim($_POST['username']));
+          $email = htmlspecialchars(trim($_POST['email']));
+          $password = trim($_POST['password']);
+  
+          if (empty($username) || empty($email) || empty($password)) {
+              $error = "All fields are required.";
+              $this->loadView('register', ['error' => $error]);
+              return;
+          }
+  
+          $stmt = $this->pdo->prepare("SELECT id FROM users WHERE username = :username OR email = :email");
+          $stmt->execute(['username' => $username, 'email' => $email]);
+          if ($stmt->fetch()) {
+              $error = "Username or email already taken. Please choose another.";
+              $this->loadView('register', ['error' => $error]);
+              return;
+          }
+  
 
-            if (empty($username) || empty($password)) {
-                $error = "Username and password are required.";
-                $this->loadView('register', ['error' => $error]);
-                return;
-            }
-
-            $stmt = $this->pdo->prepare("SELECT id FROM users WHERE username = :username");
-            $stmt->execute(['username' => $username]);
-            if ($stmt->fetch()) {
-                $error = "Username already taken. Please choose another one.";
-                $this->loadView('register', ['error' => $error]);
-                return;
-            }
-
-            $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-
-            $stmt = $this->pdo->prepare("INSERT INTO users (username, password, role) VALUES (:username, :password, :role)");
-            $result = $stmt->execute([
-                'username' => $username,
-                'password' => $passwordHash,
-                'role' => 'member'
-            ]);
-
-            if ($result) {
-                session_start();
-                $_SESSION['user_id'] = $this->pdo->lastInsertId();
-                $_SESSION['username'] = $username;
-                $_SESSION['role'] = 'member';
-
-                header("Location: /");
-                exit();
-            } else {
-                $error = "Registration failed. Please try again.";
-                $this->loadView('register', ['error' => $error]);
-            }
-        } else {
-            $this->loadView('register');
-        }
-    }
+          $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+          $stmt = $this->pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, 'member')");
+          $result = $stmt->execute([
+              'username' => $username,
+              'email' => $email,
+              'password' => $passwordHash,
+          ]);
+  
+          if ($result) {
+              session_start();
+              $_SESSION['user_id'] = $this->pdo->lastInsertId();
+              $_SESSION['username'] = $username;
+              $_SESSION['role'] = 'member';
+  
+              header("Location: /");
+              exit();
+          } else {
+              $error = "Registration failed. Please try again.";
+              $this->loadView('register', ['error' => $error]);
+          }
+      } else {
+          $this->loadView('register');
+      }
+  }
 
     public function login()
     { 

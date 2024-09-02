@@ -8,10 +8,10 @@
 
         <?php if ($book['available_copies'] > 0): ?>
             <?php if (isset($_SESSION['username'])): ?>
-                <form method="POST" action="/reserve">
-                    <input type="hidden" name="book_id" value="<?= htmlspecialchars($book['id']) ?>">
-                    <button type="submit" class="reserve-button">Reserve a Copy</button>
-                </form>
+              <form method="POST" action="/reserve">
+                  <input type="hidden" name="book_id" value="<?= htmlspecialchars($book['id']) ?>">
+                  <button type="submit" class="reserve-button">Reserve a Copy</button>
+              </form>
             <?php else: ?>
                 <a href="/register" class="reserve-button">Register to Reserve a Copy</a>
             <?php endif; ?>
@@ -22,4 +22,11 @@
     <?php else: ?>
         <p>Sorry, we couldn't find the book you're looking for.</p>
     <?php endif; ?>
+
+    <?php if (isset($_GET['reserved']) && $_GET['reserved'] == 'success'): ?>
+        <p class="success-message">Book reserved successfully!</p>
+    <?php elseif (isset($_GET['reserved']) && $_GET['reserved'] == 'error'): ?>
+        <p class="error-message">Failed to reserve the book. Please try again.</p>
+    <?php endif; ?>
+
 </div>
