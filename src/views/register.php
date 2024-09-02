@@ -14,6 +14,9 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br>
 
+    <label for="confirm_password">Confirm Password:</label>
+    <input type="password" id="confirm_password" name="confirm_password" required><br>
+
     <input type="submit" value="Register">
-  </form>
+</form>
 </div>

@@ -27,7 +27,8 @@ a:hover {
 }
 
 /*Register */
-.register-container {
+.register-container,
+.login-container {
   max-width: 380px;
   margin: 0 auto;
   padding: 20px;

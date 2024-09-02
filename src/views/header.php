@@ -19,7 +19,7 @@
             <?php if (isset($_SESSION['username'])): ?>
                 <li><a href="/profile">Profile</a></li>
                 <?php if ($_SESSION['role'] === 'clerk' || $_SESSION['role'] === 'admin'): ?>
-                    <li><a href="/manage">Manage</a></li>
+                    <li><a href="/manage-reservations">Manage</a></li>
                 <?php endif; ?>
                 <?php if ($_SESSION['role'] === 'admin'): ?>
                     <li><a href="/dashboard">Dashboard</a></li>

@@ -1,3 +1,4 @@
+<div class="login-container">
 <h2>Login</h2>
 <form method="POST" action="/login">
     <label for="username">Username:</label><br>
@@ -8,3 +9,4 @@
 
     <input type="submit" value="Login">
 </form>
+</div>

@@ -99,6 +99,7 @@ header nav ul li a:hover {
 
 /* Main Content */
 main {
+  min-height: 80vh;
   padding: 20px;
   background-color: var(--bg-color);
   border-radius: 5px;

@@ -55,7 +55,32 @@ switch ($request) {
         require __DIR__ . '/../src/controllers/DashboardController.php';
         $controller = new DashboardController($pdo);
         $controller->manageUsers();
-        break;        
+        break;      
+    case '/dashboard/manage-books' :
+        require __DIR__ . '/../src/controllers/DashboardController.php';
+        $controller = new DashboardController($pdo);
+        $controller->manageBooks();
+        break;
+    case '/manage-reservations':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
+        $controller->manageReservations();  
+        break;
+    case '/confirm-reservation':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
+        $controller->confirmReservation();
+        break;
+    case '/mark-as-returned':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
+        $controller->markAsReturned();
+        break;
+    case '/cancel-reservation':
+        require __DIR__ . '/../src/controllers/ProfileController.php';
+        $controller = new ProfileController($pdo);
+        $controller->cancelReservation();
+        break;
     default:
         http_response_code(404);
         echo '404 - Not Found';

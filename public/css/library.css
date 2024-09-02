@@ -25,6 +25,7 @@
 }
 
 .search-form input.search-bar {
+  width: 40%;
   margin: 0;
 }
 
