@@ -80,7 +80,7 @@ form button:hover {
   background-color: #666;
 }
 
-/* Books Management */
+/* Books & Users Management */
 .book-management {
   max-width: 1000px;
   margin: 0 auto;
@@ -203,6 +203,98 @@ form button:hover {
 
 .pagination a:hover {
   background-color: var(--secondary-color);
+}
+
+.manage-users {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+}
+
+.manage-users h2 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.search-form {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.search-form input {
+  padding: 10px;
+  border: 1px solid var(--trim-color);
+  border-radius: 5px;
+  flex-grow: 1;
+}
+
+.search-form button {
+  padding: 10px 15px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+  background-color: var(--primary-color);
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--trim-color);
+}
+
+.users-table th {
+  background-color: var(--trim-color);
+  color: var(--text-color);
+}
+
+.users-table tr:hover {
+  background-color: var(--primary-color);
+  transition: background-color 0.2s ease;
+}
+
+.edit-btn,
+.ban-btn,
+.delete-btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+  background-color: var(--primary-color);
+}
+
+.ban-btn {
+  background-color: #ff6b6b;
+}
+
+.delete-btn {
+  background-color: var(--secondary-color);
+}
+
+.edit-btn:hover,
+.ban-btn:hover,
+.delete-btn:hover {
+  background-color: var(--bg-color);
 }
 
 /* Admin Dashboard */

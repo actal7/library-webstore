@@ -56,6 +56,16 @@ switch ($request) {
         $controller = new DashboardController($pdo);
         $controller->manageUsers();
         break;      
+    case '/dashboard/delete-user':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
+        $controller->deleteUser();
+        break;        
+    case '/dashboard/ban-user':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
+        $controller->banUser();
+        break;
     case '/dashboard/manage-books':
         require __DIR__ . '/../src/controllers/ManageController.php';
         $controller = new ManageController($pdo);
@@ -100,6 +110,16 @@ switch ($request) {
             $controller->showEditForm();
         }
         break;
+    case '/dashboard/edit-user':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->editUser();
+        } else {
+            $controller->showEditUserForm();
+        }
+        break;
+        
     default:
         http_response_code(404);
         echo '404 - Not Found';

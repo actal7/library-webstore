@@ -68,6 +68,93 @@ class ManageController extends BaseController
         }
     }
 
+    public function manageUsers()
+    {
+        $search = $_GET['search'] ?? '';
+        $searchTerm = '%' . $search . '%';
+
+        $stmt = $this->pdo->prepare("
+            SELECT * FROM users 
+            WHERE username LIKE :searchTerm 
+            OR email LIKE :searchTerm 
+            OR CAST(id AS TEXT) LIKE :searchTerm
+        ");
+        $stmt->execute(['searchTerm' => $searchTerm]);
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $this->loadView('manage_users', ['users' => $users, 'search' => $search]);
+    }
+
+    public function showEditUserForm()
+    {
+        $userId = $_GET['id'] ?? null;
+
+        if ($userId) {
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
+            $stmt->execute(['id' => $userId]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user) {
+                $this->loadView('edit_user', ['user' => $user]);
+            } else {
+                echo "User not found.";
+            }
+        } else {
+            echo "Invalid user ID.";
+        }
+    }
+
+    public function editUser()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $_POST['id'];
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $role = $_POST['role'];
+
+            $stmt = $this->pdo->prepare("UPDATE users SET username = :username, email = :email, role = :role WHERE id = :id");
+            $stmt->execute([
+                'username' => $username,
+                'email' => $email,
+                'role' => $role,
+                'id' => $userId
+            ]);
+
+            header("Location: /dashboard/manage-users?status=edited");
+            exit();
+        }
+    }
+
+    public function deleteUser()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $_POST['id'];
+
+            $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
+            $stmt->execute(['id' => $userId]);
+
+            header("Location: /dashboard/manage-users?status=deleted");
+            exit();
+        } else {
+            echo "Invalid request method.";
+        }
+    }
+
+    public function banUser()
+    {
+        $userId = $_GET['id'] ?? null;
+
+        if ($userId) {
+            $stmt = $this->pdo->prepare("UPDATE users SET role = 'banned' WHERE id = :id");
+            $stmt->execute(['id' => $userId]);
+
+            header("Location: /dashboard/manage-users?status=banned");
+            exit();
+        } else {
+            echo "Invalid user ID.";
+        }
+    }
+
     public function manageBooks()
     {
         $search = $_GET['search'] ?? '';
@@ -78,7 +165,6 @@ class ManageController extends BaseController
         $stmt->execute(['search' => '%' . $search . '%', 'offset' => ($page - 1) * 20]);
         $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Count total books for pagination
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM books WHERE title LIKE :search OR author LIKE :search");
         $stmt->execute(['search' => '%' . $search . '%']);
         $totalBooks = $stmt->fetchColumn();

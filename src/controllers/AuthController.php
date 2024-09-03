@@ -70,13 +70,17 @@ class AuthController extends BaseController
                 return;
             }
 
-            // Check if the user exists
             $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
             $stmt->execute(['username' => $username]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user && password_verify($password, $user['password'])) {
-                // Start a session and log the user in
+                if ($user['role'] === 'banned') {
+                    $error = "This account has been banned...";
+                    $this->loadView('login', ['error' => $error]);
+                    return;
+                }
+
                 session_start();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];

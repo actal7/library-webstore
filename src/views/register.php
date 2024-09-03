@@ -1,6 +1,4 @@
-<?php if (!empty($error)): ?>
-    <p class="error"><?= htmlspecialchars($error) ?></p>
-<?php endif; ?>
+
 
 <div class="register-container">
 <h2>Register</h2>
@@ -16,7 +14,11 @@
 
     <label for="confirm_password">Confirm Password:</label>
     <input type="password" id="confirm_password" name="confirm_password" required><br>
-
+    <?php if (!empty($error)): ?>
+        <p class="error"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
     <input type="submit" value="Register">
+
+  
 </form>
 </div>
