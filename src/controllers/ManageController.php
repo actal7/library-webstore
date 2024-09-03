@@ -68,4 +68,95 @@ class ManageController extends BaseController
         }
     }
 
+    public function manageBooks()
+    {
+        $search = $_GET['search'] ?? '';
+        $page = $_GET['page'] ?? 1;
+        $query = "SELECT * FROM books WHERE title LIKE :search OR author LIKE :search LIMIT 20 OFFSET :offset";
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['search' => '%' . $search . '%', 'offset' => ($page - 1) * 20]);
+        $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Count total books for pagination
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM books WHERE title LIKE :search OR author LIKE :search");
+        $stmt->execute(['search' => '%' . $search . '%']);
+        $totalBooks = $stmt->fetchColumn();
+
+        $this->loadView('manage_books', ['books' => $books, 'search' => $search, 'totalBooks' => $totalBooks, 'currentPage' => $page]);
+    }
+
+    public function addBook()
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO books (title, author, description, total_copies, available_copies, image_url) VALUES (:title, :author, :description, :total_copies, :total_copies, :image_url)");
+        $stmt->execute([
+            'title' => $_POST['title'],
+            'author' => $_POST['author'],
+            'description' => $_POST['description'],
+            'total_copies' => (int)$_POST['total_copies'],  // Convert to integer
+            'image_url' => $_POST['image_url']
+        ]);
+        header("Location: /dashboard/manage-books");
+        exit();
+    }
+
+    public function showEditForm()
+    {
+        $bookId = $_GET['id'] ?? null;
+
+        if ($bookId) {
+            $stmt = $this->pdo->prepare("SELECT * FROM books WHERE id = :id");
+            $stmt->execute(['id' => $bookId]);
+            $book = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($book) {
+                $this->loadView('edit_book', ['book' => $book]);
+            } else {
+                echo "Book not found.";
+            }
+        } else {
+            echo "Invalid book ID.";
+        }
+    }
+
+    public function editBook()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $bookId = $_POST['id'];
+            $title = $_POST['title'];
+            $author = $_POST['author'];
+            $description = $_POST['description'];
+            $totalCopies = $_POST['total_copies'];
+            $availableCopies = $_POST['available_copies'];
+
+            $stmt = $this->pdo->prepare("UPDATE books SET title = :title, author = :author, description = :description, total_copies = :total_copies, available_copies = :available_copies, image_url = :image_url WHERE id = :id");
+            $stmt->execute([
+                'title' => $_POST['title'],
+                'author' => $_POST['author'],
+                'description' => $_POST['description'],
+                'total_copies' => (int)$_POST['total_copies'], 
+                'available_copies' => (int)$_POST['available_copies'],  
+                'image_url' => $_POST['image_url'],
+                'id' => $_POST['id']
+            ]);
+            header("Location: /dashboard/manage-books");
+            exit();
+        }
+    }
+
+
+    public function deleteBook()
+    {
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $bookId = $_POST['id'];
+
+        $stmt = $this->pdo->prepare("DELETE FROM books WHERE id = :id");
+        $stmt->execute(['id' => $bookId]);
+
+        header("Location: /dashboard/manage-books?status=deleted");
+        exit();
+    }
+    }
+
+
 }

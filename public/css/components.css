@@ -79,3 +79,168 @@ form input[type="submit"]:hover,
 form button:hover {
   background-color: #666;
 }
+
+/* Books Management */
+.book-management {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+}
+
+.book-management h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.search-form,
+.add-book-form {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-form input,
+.add-book-form input,
+.add-book-form textarea {
+  padding: 10px;
+  border: 1px solid var(--trim-color);
+  border-radius: 5px;
+  flex-grow: 1;
+  margin-right: 10px;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.add-book-form textarea {
+  vertical-align: top;
+  height: 38px;
+  resize: none;
+}
+
+.search-form button,
+.add-book-form button {
+  padding: 10px 15px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-form button:hover,
+.add-book-form button:hover {
+  background-color: var(--primary-color);
+}
+
+.books-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.books-table th,
+.books-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--trim-color);
+}
+
+.books-table th {
+  background-color: var(--trim-color);
+  color: var(--text-color);
+}
+
+.books-table tr:hover {
+  background-color: var(--primary-color);
+  transition: background-color 0.2s ease;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+  background-color: var(--primary-color);
+}
+
+.delete-btn {
+  background-color: var(--secondary-color);
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  background-color: var(--bg-color);
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination a {
+  padding: 8px 12px;
+  margin: 0 5px;
+  background-color: var(--trim-color);
+  color: var(--text-color);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.pagination a.active {
+  background-color: var(--primary-color);
+}
+
+.pagination a:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Admin Dashboard */
+.dashboard {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard h2 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.dashboard ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dashboard ul li {
+  margin-bottom: 10px;
+}
+
+.dashboard ul li a {
+  display: block;
+  padding: 10px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.dashboard ul li a:hover {
+  background-color: var(--primary-color);
+}

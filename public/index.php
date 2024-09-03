@@ -56,10 +56,20 @@ switch ($request) {
         $controller = new DashboardController($pdo);
         $controller->manageUsers();
         break;      
-    case '/dashboard/manage-books' :
-        require __DIR__ . '/../src/controllers/DashboardController.php';
-        $controller = new DashboardController($pdo);
+    case '/dashboard/manage-books':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
         $controller->manageBooks();
+        break;
+    case '/dashboard/add-book':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
+        $controller->addBook();
+        break;
+    case '/dashboard/delete-book':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
+        $controller->deleteBook();
         break;
     case '/manage-reservations':
         require __DIR__ . '/../src/controllers/ManageController.php';
@@ -80,6 +90,15 @@ switch ($request) {
         require __DIR__ . '/../src/controllers/ProfileController.php';
         $controller = new ProfileController($pdo);
         $controller->cancelReservation();
+        break;
+    case '/dashboard/edit-book':
+        require __DIR__ . '/../src/controllers/ManageController.php';
+        $controller = new ManageController($pdo);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->editBook();
+        } else {
+            $controller->showEditForm();
+        }
         break;
     default:
         http_response_code(404);
