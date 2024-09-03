@@ -12,7 +12,10 @@
         <div class="books-grid">
         <?php foreach ($books as $book): ?>
             <a href="/book?id=<?= htmlspecialchars($book['id']) ?>" class="book-card">
-                <img src="<?= htmlspecialchars($book['image_url']) ?>" alt="<?= htmlspecialchars($book['title']) ?>">
+            <img src="<?= htmlspecialchars($book['image_url']) ?>" 
+                alt="<?= htmlspecialchars($book['title']) ?>" 
+                class="book-cover" 
+                onerror="this.onerror=null;this.src='/images/fallback.jpg';">
                 <h3><?= htmlspecialchars($book['title']) ?></h3>
                 <p><?= htmlspecialchars($book['author']) ?></p>
                 <p><?= htmlspecialchars($book['description']) ?></p>

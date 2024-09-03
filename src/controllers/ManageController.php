@@ -11,13 +11,10 @@ class ManageController extends BaseController
             $stmt = $this->pdo->prepare("UPDATE reservations SET status = 'borrowed', borrow_date = CURRENT_TIMESTAMP WHERE id = :id AND status = 'reserved'");
             $stmt->execute(['id' => $reservationId]);
 
-            $stmt = $this->pdo->prepare("UPDATE books SET available_copies = available_copies - 1 WHERE id = (SELECT book_id FROM reservations WHERE id = :id)");
-            $stmt->execute(['id' => $reservationId]);
-
-            header("Location: /dashboard/manage-reservations?status=confirmed");
+            header("Location: /manage-reservations?status=confirmed");
             exit();
         } else {
-            header("Location: /dashboard/manage-reservations?status=error");
+            header("Location: /manage-reservations?status=error");
             exit();
         }
     }
@@ -30,7 +27,6 @@ class ManageController extends BaseController
             exit();
         }
 
-        // Fetch all reservations
         $stmt = $this->pdo->query("
             SELECT reservations.id, reservations.status, reservations.reservation_date, reservations.borrow_date, 
                   books.title, books.author, users.username
@@ -49,19 +45,27 @@ class ManageController extends BaseController
         $reservationId = $_POST['reservation_id'] ?? null;
 
         if ($reservationId && ($_SESSION['role'] === 'clerk' || $_SESSION['role'] === 'admin')) {
-            $stmt = $this->pdo->prepare("DELETE FROM reservations WHERE id = :id AND status = 'borrowed'");
+            $stmt = $this->pdo->prepare("SELECT book_id FROM reservations WHERE id = :id AND status = 'borrowed'");
             $stmt->execute(['id' => $reservationId]);
+            $book = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Increase the available copies
-            $stmt = $this->pdo->prepare("UPDATE books SET available_copies = available_copies + 1 WHERE id = (SELECT book_id FROM reservations WHERE id = :id)");
+            if ($book) {
+                $stmt = $this->pdo->prepare("DELETE FROM reservations WHERE id = :id AND status = 'borrowed'");
+                $stmt->execute(['id' => $reservationId]);
 
-            $stmt->execute(['id' => $reservationId]);
+                $stmt = $this->pdo->prepare("UPDATE books SET available_copies = available_copies + 1 WHERE id = :book_id");
+                $stmt->execute(['book_id' => $book['book_id']]);
 
-            header("Location: /dashboard/manage-reservations?status=returned");
-            exit();
+                header("Location: /manage-reservations?status=returned");
+                exit();
+            } else {
+                header("Location: /manage-reservations?status=error");
+                exit();
+            }
         } else {
-            header("Location: /dashboard/manage-reservations?status=error");
+            header("Location: /manage-reservations?status=error");
             exit();
         }
     }
+
 }

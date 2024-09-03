@@ -36,3 +36,8 @@
   font-size: 1.2em;
   color: var(--primary-color);
 }
+
+.reservations-actions-container {
+  display: flex;
+  gap: 12px;
+}

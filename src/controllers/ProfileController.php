@@ -34,15 +34,24 @@ class ProfileController extends BaseController
         $reservationId = $_POST['reservation_id'] ?? null;
 
         if ($reservationId && isset($_SESSION['user_id'])) {
-            $stmt = $this->pdo->prepare("DELETE FROM reservations WHERE id = :id AND user_id = :user_id AND status = 'reserved'");
+            $stmt = $this->pdo->prepare("SELECT book_id FROM reservations WHERE id = :id AND user_id = :user_id AND status = 'reserved'");
             $stmt->execute(['id' => $reservationId, 'user_id' => $_SESSION['user_id']]);
+            $book = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            $stmt = $this->pdo->prepare("UPDATE books SET available_copies = available_copies + 1 WHERE id = (SELECT book_id FROM reservations WHERE id = :id)");
+            if ($book) {
+                $stmt = $this->pdo->prepare("DELETE FROM reservations WHERE id = :id AND user_id = :user_id AND status = 'reserved'");
+                $stmt->execute(['id' => $reservationId, 'user_id' => $_SESSION['user_id']]);
 
-            $stmt->execute(['id' => $reservationId]);
+                $stmt = $this->pdo->prepare("UPDATE books SET available_copies = available_copies + 1 WHERE id = :book_id");
+                $stmt->execute(['book_id' => $book['book_id']]);
 
-            header("Location: /profile?status=canceled");
-            exit();
+                $redirectUrl = $_SERVER['HTTP_REFERER'] ?? '/profile';
+                header("Location: $redirectUrl");
+                exit();
+            } else {
+                header("Location: /profile?status=error");
+                exit();
+            }
         } else {
             header("Location: /profile?status=error");
             exit();

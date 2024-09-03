@@ -11,10 +11,16 @@
                     Reserved by: <?= htmlspecialchars($reservation['username']) ?>
                     <br>
                     Reserved on: <?= htmlspecialchars($reservation['reservation_date']) ?>
-                    <form method="POST" action="/confirm-reservation">
-                        <input type="hidden" name="reservation_id" value="<?= htmlspecialchars($reservation['id']) ?>">
-                        <button type="submit">Confirm Reservation</button>
-                    </form>
+                    <div class="reservations-actions-container">
+                      <form method="POST" action="/confirm-reservation">
+                          <input type="hidden" name="reservation_id" value="<?= htmlspecialchars($reservation['id']) ?>">
+                          <button type="submit">Mark as Borrowed</button>
+                      </form>
+                      <form method="POST" action="/cancel-reservation">
+                          <input type="hidden" name="reservation_id" value="<?= htmlspecialchars($reservation['id']) ?>">
+                          <button type="submit">Cancel Reservation</button>
+                      </form>
+                    <div>
                 </li>
             <?php elseif ($reservation['status'] == 'borrowed'): ?>
                 <li>

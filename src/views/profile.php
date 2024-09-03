@@ -7,7 +7,7 @@
     </div>
 
     <h2>Your Reserved Books</h2>
-    <?php if (empty($reservations)): ?>
+    <?php if (empty(array_filter($reservations, fn($r) => $r['status'] == 'reserved'))): ?>
         <p>You have no reservations at the moment.</p>
     <?php else: ?>
         <ul class="reservations-list">
